@@ -4,12 +4,8 @@
 
 */
 
-
 import 'package:flutter/material.dart';
 import 'package:tugas3_pageindomie/resep.dart';
-
-
-
 void main() {
   runApp(const MainApp());
  
@@ -21,7 +17,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const ResepPages()
+      home: ResepPages()
     );
   }
 }

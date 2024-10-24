@@ -2,7 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:tugas3_pageindomie/style.dart';
 
 class ResepPages extends StatelessWidget {
-  const ResepPages({super.key});
+  ResepPages({super.key});
+
+  List steps = [
+    "Rebus air secukupnya hingga mendidih.",
+    "Masukkan mie ke dalam air mendidih dan rebus selama 3-4 menit.",
+    "Siapkan bumbu dengan menuangkan ke dalam mangkuk.",
+    "Tiriskan mie jika tidak ingin berkuah, atau langsung tuang ke mangkuk.",
+    "Campurkan mie dengan bumbu dan aduk hingga merata.",
+    "Hidangkan mie dengan tambahan sesuai selera."
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -10,12 +19,12 @@ class ResepPages extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
+           child : Column(
             children: [
               Stack(
                 clipBehavior: Clip.none,
                 children: [
+                  //information
                   Container(
                     width : double.infinity,
                     height : screen.height * 0.5,
@@ -61,6 +70,7 @@ class ResepPages extends StatelessWidget {
                       ],
                     ),
                   ),
+                  //rating and favorite
                   Positioned(
                     top : 205,
                     left: 15,
@@ -79,7 +89,7 @@ class ResepPages extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Text("4.7/5"),
+                                Text("4.7 / 5"),
                                 Icon(
                                   Icons.star,
                                   color: Colors.yellow,
@@ -94,18 +104,13 @@ class ResepPages extends StatelessWidget {
                               color: Colors.white,
                               borderRadius : BorderRadius.circular(18)
                             ),
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.favorite,
-                                color : Colors.red,
-                              )
-                              )
+                            child: const ButtonFavorite(),
                           )
                         ],
                       ),
                     ),
                   ),
+                  //todo
                   Positioned(
                     top : 420,
                     left: 108,
@@ -128,12 +133,75 @@ class ResepPages extends StatelessWidget {
                     ),
                   )
                 ],
+              ),
+              SizedBox(height: 30),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: steps.length, 
+                  itemBuilder: (context, index) => Container(
+                    height: 75,
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 12.0, vertical : 7
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: ListTile(
+                      leading: Text('${index+1}',style: TextStyle(fontSize: 18)),
+                      title: Text(
+                        steps[index],
+                        style: TextStyle(
+                          fontSize : 14
+                        ),
+                        ),
+                      trailing: IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.check_box, color: icon_color),
+                                  ),
+                    ),
+                  )
+                ),
               )
             ],
           ),
-        ),
       )
     );
   }
+}
+
+class ButtonFavorite extends StatefulWidget {
+  const ButtonFavorite({
+    super.key,
+  });
+  
+  @override
+  State<StatefulWidget> createState() => _ButtonFavorite();
+}
+
+class _ButtonFavorite extends State<ButtonFavorite>{
+
+  bool isSelected = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return CircleAvatar(
+      backgroundColor: Colors.white,
+      child: IconButton(
+        onPressed: () {
+          setState(() {
+            isSelected = !isSelected;
+          });
+        },
+        icon : Icon(
+          isSelected ? Icons.favorite : Icons.favorite_outline,
+          color: const Color.fromARGB(255, 255, 0, 0),
+          size: 26,
+          )
+      )
+    );
+  }
+
 }
 
